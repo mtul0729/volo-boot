@@ -1,0 +1,19 @@
+syntax = "proto3";
+package user;
+
+message User {
+  int64 id = 1;
+  string username = 2;
+  optional string nickname = 3;
+  optional string phone = 4;
+  map<string, string> extra = 10;
+}
+
+message GetUserRequest {
+  optional int64 id = 1;
+  optional string username = 2;
+}
+
+service UserService {
+  rpc GetUser(GetUserRequest) returns (User);
+}
