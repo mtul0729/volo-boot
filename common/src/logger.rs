@@ -1,10 +1,8 @@
-//! 统一日志与追踪配置模块
-
 use std::io;
 use tracing_appender::non_blocking::WorkerGuard;
 use tracing_subscriber::{fmt, layer::SubscriberExt, EnvFilter, Registry};
 
-/// 初始化统一的 tracing 订阅器
+/// 初始化统一的 tracing 订阅器,
 /// 返回 `WorkerGuard` 确保日志写入器生命周期正确
 pub fn init_tracing() -> (WorkerGuard, WorkerGuard) {
     // 默认日志级别为 "info"，可通过 RUST_LOG 覆盖
@@ -21,7 +19,7 @@ pub fn init_tracing() -> (WorkerGuard, WorkerGuard) {
         .with_target(false)
         .with_writer(console_writer)
         .with_ansi(atty::is(atty::Stream::Stdout)) // 自动检测TTY启用颜色
-        .with_file(true) // 显示文件名（短路径需自定义）
+        .with_file(true) // 显示文件名
         .with_line_number(true) // 显示行号
         .with_thread_names(false)
         .compact();
@@ -30,9 +28,9 @@ pub fn init_tracing() -> (WorkerGuard, WorkerGuard) {
         .with_timer(fmt::time::ChronoLocal::rfc_3339())
         .with_target(false)
         .with_writer(file_writer)
-        .with_ansi(false) // 自动检测TTY启用颜色
-        .with_file(true) // 显示文件名（短路径需自定义）
-        .with_line_number(true) // 显示行号
+        .with_ansi(false)
+        .with_file(true)
+        .with_line_number(true)
         .with_thread_names(false)
         .compact();
 
