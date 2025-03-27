@@ -10,11 +10,12 @@ edition = "2021"
 volo = "*"
 volo-http = { version = "*", features = ["default_server"] }
 tracing = "0.1"
-tracing-appender = "0.2"
-tracing-subscriber = "0.3"
-tracing-log = "0.2"
 
 tokio = { version = "1", features = ["full"] }
+
+common = {path = "../common"}
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 
 [profile.release]
 opt-level = 3
