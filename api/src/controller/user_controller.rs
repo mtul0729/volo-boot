@@ -1,4 +1,3 @@
-use std::collections::HashMap;
 use volo_http::{http::StatusCode, server::extract::Query, json::Json};
 use volo_http::server::IntoResponse;
 
