@@ -6,3 +6,6 @@
 
 ## 相关issue
 [issue](https://github.com/cloudwego/volo/issues/550)
+
+## 说明
+目前这个示例项目架构还没在生产环境验证，只是自己学习和测试用
