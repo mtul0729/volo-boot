@@ -1,0 +1,1 @@
+pub const RPC_USER_KEY: &'static str = "volo-boot-user.rpc";

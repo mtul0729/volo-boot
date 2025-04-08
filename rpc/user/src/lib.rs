@@ -1,4 +1,6 @@
-use volo_gen::user;
+pub mod app_config;
+
+pub use volo_gen::user;
 
 pub struct S;
 

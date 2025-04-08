@@ -1,3 +1,5 @@
+//! 日志记录模块
+
 use std::io;
 use tracing_appender::non_blocking::WorkerGuard;
 use tracing_subscriber::{fmt, layer::SubscriberExt, EnvFilter, Registry};

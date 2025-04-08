@@ -10,14 +10,13 @@ volo-gen = { path = "./volo-gen" }
 
 volo.workspace = true
 volo-grpc.workspace = true
-pilota.workspace = true
-
-anyhow.workspace = true
 tokio = { workspace = true, features = ["full"] }
+anyhow.workspace = true
 
 tracing = "0.1"
-
 common = { path = "../../common" }
+serde = { version = "1.0.219", features = ["derive"] }
+clap = { version = "4.5", features = ["default", "derive"] }
 
 
 [profile.release]
@@ -44,7 +43,7 @@ volo = "*"
 volo-build = "*"
 volo-grpc = "*"
 pilota = "*"
-
-anyhow = "1"
 futures = "0.3"
 tokio = "1"
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
