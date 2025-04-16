@@ -21,4 +21,4 @@
 目前这个示例项目架构还没在生产环境验证，只是自己学习和测试用
 
 交流学习群:
-![img.png](img.png)
+![img.png](feishu_chat.png)
