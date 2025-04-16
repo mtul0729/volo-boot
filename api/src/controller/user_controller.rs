@@ -1,11 +1,10 @@
-use volo::layer::LayerExt;
+use crate::controller::R;
 use crate::ServiceContext;
 use user::user::{GetUserRequest, User};
 use volo::loadbalance::RequestHash;
 use volo::METAINFO;
 use volo_http::request::ServerRequest;
-use volo_http::{http::StatusCode, json::Json, server::extract::Query, Extension};
-use crate::controller::R;
+use volo_http::{http::StatusCode, server::extract::Query, Extension};
 
 /// 通过id获取用户实体
 pub async fn get_user(

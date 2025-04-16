@@ -1,10 +1,8 @@
+use crate::controller::R;
 use crate::ServiceContext;
 use order::order::{GetOrderRequest, Order};
-use volo::loadbalance::RequestHash;
-use volo::METAINFO;
 use volo_http::request::ServerRequest;
-use volo_http::{http::StatusCode, json::Json, server::extract::Query, Extension};
-use crate::controller::R;
+use volo_http::{http::StatusCode, server::extract::Query, Extension};
 
 /// 通过id获取用户实体
 pub async fn get_order(
@@ -32,7 +30,7 @@ pub async fn get_order(
     //     m.borrow_mut().insert(RequestHash(id as u64));
     // });
 
-    let mut ret;
+    let ret;
 
     if let Some(id) = id {
         let Some(str_id) = id.as_str() else {
