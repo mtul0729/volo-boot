@@ -1,0 +1,20 @@
+syntax = "proto3";
+package order;
+
+message Order {
+  int64 id = 1;
+  int64 user_id = 2;
+  string name = 3;
+  string product_name = 4;
+  int64 create_at = 5;
+  map<string, string> extra = 10;
+}
+
+message GetOrderRequest {
+  optional int64 id = 1;
+  optional int64 user_id = 2;
+}
+
+service OrderService {
+  rpc GetOrder(GetOrderRequest) returns (Order);
+}

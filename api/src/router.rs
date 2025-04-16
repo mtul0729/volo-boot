@@ -13,6 +13,7 @@ pub fn build_router(cxt: ServiceContext) -> Router {
     Router::new()
         .route("/metrics", get(move || ready(record_handler.render())))
         .route("/user/query-one", get(controller::user_controller::get_user))
+        .route("/order/query-one", get(controller::order_controller::get_order))
         .layer(middleware::from_fn(track_metrics))
         .layer(Extension(cxt))
 }

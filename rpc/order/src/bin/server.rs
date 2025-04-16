@@ -1,12 +1,12 @@
 use anyhow::anyhow;
 use clap::Parser;
 use common::load_config::LoadConfig;
+use order::app_config::AppConfig;
+use order::S;
 use std::net::SocketAddr;
 use std::sync::Arc;
 use std::time::Duration;
 use tokio::signal;
-use user::app_config::AppConfig;
-use user::S;
 use volo_grpc::codegen::futures::TryFutureExt;
 use volo_grpc::server::{Server, ServiceBuilder};
 
@@ -19,6 +19,17 @@ struct Args {
 
 #[volo::main]
 async fn main() {
+    // 这部分被注释的代码是 `volo init --includes=idl order idl/order.proto` 生成的原代码
+    // let addr: SocketAddr = "[::]:8080".parse().unwrap();
+    // let addr = volo::net::Address::from(addr);
+    //
+    // Server::new()
+    //     .add_service(ServiceBuilder::new(volo_gen::order::OrderServiceServer::new(S)).build())
+    //     .run(addr)
+    //     .await
+    //     .unwrap();
+
+    // 下面是自己写的代码
     let args = Args::parse();
 
     // 这里不要使用 `let _ = xxx;` 的形式来接受返回结果，避免被立即drop掉导致日志声明周期有问题
@@ -77,7 +88,9 @@ async fn main() {
 
     let server_task = tokio::spawn(async move {
         Server::new()
-            .add_service(ServiceBuilder::new(user_volo_gen::user::UserServiceServer::new(S)).build())
+            .add_service(
+                ServiceBuilder::new(order_volo_gen::order::OrderServiceServer::new(S)).build(),
+            )
             .run_with_shutdown(addr, async {
                 let _ = shutdown_rx.changed().await;
                 Ok(())

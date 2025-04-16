@@ -1,23 +1,26 @@
 [package]
-name = "user"
+name = "order"
 version = "0.1.0"
 edition.workspace = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-user-volo-gen = { path = "./volo-gen" }
+order-volo-gen = { path = "./volo-gen" }
 
 volo.workspace = true
 volo-grpc.workspace = true
-tokio = { workspace = true, features = ["full"] }
+pilota.workspace = true
+
 anyhow.workspace = true
+tokio = { workspace = true, features = ["full"] }
 
 # 需要手动加的依赖 -- begin --
 tracing = "0.1"
 common = { path = "../../common" }
 serde = { version = "1.0.219", features = ["derive"] }
 clap = { version = "4.5", features = ["default", "derive"] }
+chrono = "0.4"
 # 需要手动加的依赖 -- end --
 
 [profile.release]
@@ -44,9 +47,10 @@ volo = "*"
 volo-build = "*"
 volo-grpc = "*"
 pilota = "*"
+
+anyhow = "1"
 futures = "0.3"
 tokio = "1"
-anyhow = "1"
 
 # 需要手动加的依赖 -- begin --
 serde = { version = "1", features = ["derive"] }
