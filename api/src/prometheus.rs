@@ -1,15 +1,13 @@
-use std::time::Instant;
 use metrics_exporter_prometheus::{Matcher, PrometheusBuilder, PrometheusHandle};
-use volo_http::{
-    body::{Body, },
-    http::{Request, Response},
-    context::ServerContext,
-    server::middleware::Next
-};
+use std::time::Instant;
 use volo_http::http::{StatusCode, Uri};
 use volo_http::request::ServerRequest;
 use volo_http::response::ServerResponse;
 use volo_http::server::IntoResponse;
+use volo_http::{
+    context::ServerContext,
+    server::middleware::Next
+};
 
 pub fn setup_metrics_recorder() -> PrometheusHandle {
     const EXPONENTIAL_SECONDS: &[f64] = &[
