@@ -4,16 +4,17 @@ use volo::loadbalance::RequestHash;
 use volo::METAINFO;
 use volo_http::request::ServerRequest;
 use volo_http::{http::StatusCode, json::Json, server::extract::Query, Extension};
+use crate::controller::R;
 
 /// 通过id获取用户实体
 pub async fn get_order(
     Extension(ctx): Extension<ServiceContext>,
     Query(param): Query<serde_json::Value>,
     _req: ServerRequest,
-) -> Result<Json<Order>, StatusCode> {
+) -> R<Order> {
     // 如果 order rpc 服务为空，直接返回错误码
     let Some(rpc_cli) = ctx.rpc_cli_order else {
-        return Err(StatusCode::GONE);
+        return R::error_status_code(StatusCode::GONE, "Gone")
     };
 
     // 获取参数
@@ -22,7 +23,7 @@ pub async fn get_order(
 
     // id 和 user_id 参数不能同时为空
     if id.is_none() && user_id.is_none() {
-        return Err(StatusCode::BAD_REQUEST);
+        return R::error_status_code(StatusCode::BAD_REQUEST, "id 和 user_id 不能同时为空");
     }
 
     // 如果 load_balance 用的ConsistentHashBalance, 则需要在本地变量（类似于java中的ThreadLocal变量）设置RequestHash
@@ -35,9 +36,11 @@ pub async fn get_order(
 
     if let Some(id) = id {
         let Some(str_id) = id.as_str() else {
-            return Err(StatusCode::BAD_REQUEST);
+            return R::error_status_code(StatusCode::BAD_REQUEST, "id 解析失败");
         };
-        let id: i64 = str_id.parse().map_err(|_| StatusCode::BAD_REQUEST)?;
+        let Ok(id) = str_id.parse() else {
+            return R::error_status_code(StatusCode::BAD_REQUEST, "id 解析失败");
+        };
         // 请求user rpc服务，然后返回
         ret = rpc_cli
             .get_order(GetOrderRequest {
@@ -47,9 +50,11 @@ pub async fn get_order(
             .await;
     } else if let Some(user_id) = user_id {
         let Some(str_user_id) = user_id.as_str() else {
-            return Err(StatusCode::BAD_REQUEST);
+            return return R::error_status_code(StatusCode::BAD_REQUEST, "user_id 解析失败");
         };
-        let usr_id: i64 = str_user_id.parse().map_err(|_| StatusCode::BAD_REQUEST)?;
+        let Ok(usr_id) = str_user_id.parse() else {
+            return return R::error_status_code(StatusCode::BAD_REQUEST, "user_id 解析失败");
+        };
         // 请求user rpc服务，然后返回
         ret = rpc_cli
             .get_order(GetOrderRequest {
@@ -58,14 +63,14 @@ pub async fn get_order(
             })
             .await;
     } else {
-        return Err(StatusCode::BAD_REQUEST);
+        return R::error_status_code(StatusCode::BAD_REQUEST, "id 和 user_id 不能同时为空");
     }
 
     match ret {
-        Ok(u) => Ok(Json(u.into_inner())),
+        Ok(u) => R::ok(u.into_inner()),
         Err(e) => {
             tracing::error!("get_order error: {:?}", e);
-            Err(StatusCode::INTERNAL_SERVER_ERROR)
+            R::server_error(e.message())
         }
     }
 }

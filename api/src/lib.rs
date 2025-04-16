@@ -4,10 +4,7 @@ pub mod consts;
 pub mod router;
 pub mod prometheus;
 
-pub mod controller{
-    pub mod user_controller;
-    pub mod order_controller;
-}
+pub mod controller;
 
 use volo_http::Extension;
 use volo_http::server::route::{get, Router};
