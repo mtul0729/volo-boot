@@ -3033,8 +3033,22 @@ dependencies = [
  "serde",
  "tokio",
  "tracing",
+ "user-volo-gen",
  "volo",
- "volo-gen",
+ "volo-grpc",
+]
+
+[[package]]
+name = "user-volo-gen"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "futures",
+ "pilota",
+ "serde",
+ "tokio",
+ "volo",
+ "volo-build",
  "volo-grpc",
 ]
 
@@ -3136,20 +3150,6 @@ dependencies = [
  "url_path",
  "volo",
  "walkdir",
-]
-
-[[package]]
-name = "volo-gen"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "futures",
- "pilota",
- "serde",
- "tokio",
- "volo",
- "volo-build",
- "volo-grpc",
 ]
 
 [[package]]

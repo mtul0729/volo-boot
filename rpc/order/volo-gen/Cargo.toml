@@ -1,5 +1,5 @@
 [package]
-name = "user-volo-gen"
+name = "order-volo-gen"
 version = "0.1.0"
 edition.workspace = true
 
