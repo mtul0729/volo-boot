@@ -1,6 +1,8 @@
 pub mod app_config;
 pub mod svc_discover;
 pub mod consts;
+pub mod router;
+pub mod prometheus;
 
 pub mod controller{
     pub mod user_controller;
@@ -17,9 +19,3 @@ pub struct ServiceContext {
 }
 
 
-pub fn build_router(cxt: ServiceContext) -> Router {
-    Router::new()
-        .route("/", get(|| async { "Ok." }))
-        .route("/user", get(controller::user_controller::get_user))
-        .layer(Extension(cxt))
-}

@@ -109,10 +109,10 @@ pub async fn register_service(
 
     let _register_inst_ret = nacos_naming_data
         .naming
-        .batch_register_instance(
+        .register_instance(
             service_name.clone(),
             group_name.clone(),
-            vec![svc_inst.clone()],
+            svc_inst.clone(),
         )
         .await;
     match _register_inst_ret {

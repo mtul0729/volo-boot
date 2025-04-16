@@ -46,7 +46,7 @@ async fn main() {
     );
 
     let nacos_svc_inst = common::svc::nacos::register_service(
-        Arc::clone(&nacos_naming_data),
+        nacos_naming_data.clone(),
         nacos_config.service_name,
         app_config.port as i32,
         Default::default(),
@@ -56,7 +56,7 @@ async fn main() {
     // 优雅停机
     let (shutdown_tx, mut shutdown_rx) = tokio::sync::watch::channel(());
 
-    let signal_nacos = Arc::clone(&nacos_naming_data);
+    let signal_nacos = nacos_naming_data.clone();
     let signal_task = tokio::spawn(async move {
         let mut term = signal::unix::signal(signal::unix::SignalKind::terminate())
             .map_err(|e| anyhow!("Failed to create SIGTERM handler: {}", e))?;
