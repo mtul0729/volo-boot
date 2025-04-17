@@ -8,13 +8,13 @@ use nacos_sdk::api::naming::{
 };
 use nacos_sdk::api::props::ClientProps;
 use std::collections::HashMap;
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, RwLock};
 
 #[derive(Debug)]
 pub struct NacosNamingData {
     naming: NamingService,
 
-    state: Mutex<NamingState>,
+    state: RwLock<NamingState>,
 
     pub sub_svc_map: DashMap<String, Vec<ServiceInstance>>,
 }
@@ -28,10 +28,10 @@ pub struct NamingState {
 
 impl NacosNamingData {
     pub fn get_state(&self) -> NamingState {
-        self.state.lock().unwrap().clone()
+        self.state.read().unwrap().clone()
     }
     pub fn update_state(&self, service_name: String, group_name: Option<String>, service_instance: Vec<ServiceInstance>) {
-        let mut state = self.state.lock().unwrap();
+        let mut state = self.state.write().unwrap();
         state.service_name = service_name;
         state.group_name = group_name;
         state.service_instance = service_instance;
@@ -77,7 +77,7 @@ pub async fn build_naming_server(
     }
     Ok(NacosNamingData {
         naming: naming_service,
-        state: Mutex::new(NamingState {
+        state: RwLock::new(NamingState {
             service_name: "".to_string(),
             group_name: None,
             service_instance: Vec::new(),
