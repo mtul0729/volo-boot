@@ -25,7 +25,7 @@ impl order_volo_gen::order::OrderService for S {
                 extra: Default::default(),
             };
 
-            return Ok(volo_grpc::Response::new(order));
+            Ok(volo_grpc::Response::new(order))
         } else if let Some(user_id) = req_data.user_id {
             // 虚假数据
             let order = order::Order {

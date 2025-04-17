@@ -72,14 +72,13 @@ pub async fn build_naming_server(
             enable_http_login = true;
         }
     }
-    let naming_service;
-    if enable_http_login {
-        naming_service = NamingServiceBuilder::new(client_props)
+    let naming_service = if enable_http_login {
+        NamingServiceBuilder::new(client_props)
             .enable_auth_plugin_http()
-            .build()?;
+            .build()?
     } else {
-        naming_service = NamingServiceBuilder::new(client_props).build()?;
-    }
+        NamingServiceBuilder::new(client_props).build()?
+    };
     Ok(NacosNamingData {
         naming: naming_service,
         state: RwLock::new(NamingState {
