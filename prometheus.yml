@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'api-gate'
+    static_configs:
+      - targets: ['volo-boot-api:8080'] # 如果你的服务也运行在 Docker 容器中（而不是宿主机），可以将其加入同一个 Docker Compose 文件，并使用服务名作为目标地址。
+    metrics_path: /metrics

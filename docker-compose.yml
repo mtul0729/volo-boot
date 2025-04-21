@@ -13,3 +13,31 @@ services:
       - RNACOS_INIT_ADMIN_PASSWORD=admin
       - RNACOS_HTTP_PORT=8848
     restart: unless-stopped  # 可选：容器异常时自动重启
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./tmp/prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+
+  api-gate:
+    image: api-service:latest
+    container_name: api-service
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rnacos
+    command: ["--config=./api/config/dev.toml"]
+    restart: unless-stopped
