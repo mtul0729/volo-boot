@@ -3,6 +3,9 @@
 use std::io;
 use tracing_appender::non_blocking::WorkerGuard;
 use tracing_subscriber::{fmt, layer::SubscriberExt, EnvFilter, Registry};
+use tracing_opentelemetry::OpenTelemetryLayer;
+use opentelemetry::sdk::trace as sdktrace;
+use opentelemetry_otlp::WithExportConfig;
 
 /// 初始化统一的 tracing 订阅器,
 /// 返回 `WorkerGuard` 确保日志写入器生命周期正确
@@ -37,11 +40,21 @@ pub fn init_tracing() -> (WorkerGuard, WorkerGuard) {
         .with_thread_names(false)
         .compact();
 
+    // 配置 OpenTelemetry Tracer
+    let tracer = opentelemetry_otlp::new_pipeline()
+        .tracing()
+        .with_exporter(opentelemetry_otlp::new_exporter().tonic())
+        .install_simple()
+        .expect("Failed to install OpenTelemetry pipeline");
+
+    let otel_layer = OpenTelemetryLayer::new(tracer);
+
     // 组合所有 Layers
     let subscriber = Registry::default()
         .with(env_filter)
         .with(console_layer)
-        .with(file_layer);
+        .with(file_layer)
+        .with(otel_layer); 
 
     tracing::subscriber::set_global_default(subscriber)
         .expect("Failed to set global tracing subscriber");

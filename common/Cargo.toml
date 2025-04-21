@@ -24,3 +24,6 @@ anyhow.workspace = true
 nacos-sdk = { version = "0.5", features = ["default"] }
 local-ip-address = "0.6.3"
 dashmap = { version = "6.1", features = ["serde"] }
+opentelemetry = { version = "0.20", features = ["trace", "rt-tokio"] }
+opentelemetry-otlp = { version = "0.13", features = ["trace", "tonic"] }
+tracing-opentelemetry = "0.21"
