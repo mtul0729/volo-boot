@@ -14,7 +14,5 @@ api:
     cargo run -p api --bin server -- --config=./api/config/dev.toml
 
 docker-up:
-    sudo docker compose up -d
+    sudo docker compose -f docker-compose-dev.yml up 
     
-docker-down:
-    sudo docker compose

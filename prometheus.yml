@@ -8,5 +8,5 @@ scrape_configs:
       - targets: ['localhost:9090']
   - job_name: 'api-gate'
     static_configs:
-      - targets: ['volo-boot-api:8080'] # 如果你的服务也运行在 Docker 容器中（而不是宿主机），可以将其加入同一个 Docker Compose 文件，并使用服务名作为目标地址。
+      - targets: ['127.0.0.1:8080'] # 如果你的服务也运行在 Docker 容器中（而不是宿主机），可以将其加入同一个 Docker Compose 文件，并使用服务名作为目标地址。
     metrics_path: /metrics

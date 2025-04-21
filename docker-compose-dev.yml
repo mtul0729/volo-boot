@@ -1,0 +1,49 @@
+services:
+  rnacos:
+    container_name: rnacos
+    image: docker.io/qingpan/rnacos:stable
+    ports:
+      - "8848:8848" # http
+      - "9848:9848" # grpc
+      - "10848:10848" # 控制台
+    volumes:
+      - ./tmp:/io:rw
+    environment:
+      - RNACOS_INIT_ADMIN_USERNAME=admin
+      - RNACOS_INIT_ADMIN_PASSWORD=admin
+      - RNACOS_HTTP_PORT=8848
+    restart: unless-stopped  # 可选：容器异常时自动重启
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus:rw
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin  # 设置初始管理员密码
+    depends_on:
+      - prometheus
+
+volumes:
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
