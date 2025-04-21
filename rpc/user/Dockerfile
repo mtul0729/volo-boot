@@ -4,14 +4,14 @@ FROM rust:latest as builder
 # 设置工作目录
 WORKDIR /app
 
-# 注意：构建时应该在项目根目录下运行 docker build -f api/Dockerfile .
+# 注意：构建时应该在项目根目录下运行 docker build -f rpc/user/Dockerfile .
 # 这样才能正确包含所有依赖
 
 # 复制整个项目
 COPY . .
 
-# 构建API服务
-RUN cargo build --release -p api
+# 构建User服务
+RUN cargo build --release -p user
 
 # 第二阶段：运行
 FROM debian:bullseye-slim
@@ -23,13 +23,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
     rm -rf /var/lib/apt/lists/*
 
 # 从构建阶段拷贝编译好的二进制文件
-COPY --from=builder /app/target/release/server /app/server
+COPY --from=builder /app/target/release/user-server /app/server
 
 # 创建配置目录（运行时会挂载）
 RUN mkdir -p /app
 
-# 暴露API服务端口
-EXPOSE 8080
+# 暴露User服务端口
+EXPOSE 50002
 
 # 设置入口点，配置路径作为命令行参数传入
 ENTRYPOINT ["/app/server"]

@@ -3,8 +3,8 @@ port=8082
 
 # 服务发现 server discover
 [sd.nacos]
-# ncos地址, 如 10.64.132.37:8848
-server_addr="10.64.132.37:8848"
+# nacos地址, 如 10.64.132.37:8848
+server_addr="rnacos:8848"
 namespace="public"
 username=""
 password=""

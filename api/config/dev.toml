@@ -9,9 +9,7 @@ subscribe_service=[
 
 # 服务发现 server discover
 [sd.nacos]
-server_addr="http://rnacos:8848" # `api-gate` 和 `rnacos` 都运行在同一个 Docker 网络中，因此 `api-gate` 不需要通过主机的 `8848` 端口访问 `rnacos`，而是可以直接通过服务名 `rnacos` 和其内部端口 `8848` 进行通信。
-# 但是如何解析出ip地址?
-
+server_addr="127.0.0.1:8848"
 namespace="public"
 username=""
 password=""
