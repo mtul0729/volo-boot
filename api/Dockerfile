@@ -10,6 +10,9 @@ WORKDIR /app
 # 复制整个项目
 COPY . .
 
+# 安装 rustfmt 组件
+RUN rustup component add rustfmt
+
 # 构建API服务
 RUN cargo build --release -p api
 

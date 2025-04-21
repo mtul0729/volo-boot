@@ -7,6 +7,9 @@ WORKDIR /app
 # 注意：构建时应该在项目根目录下运行 docker build -f rpc/order/Dockerfile .
 # 这样才能正确包含所有依赖
 
+# 安装 rustfmt 组件
+RUN rustup component add rustfmt
+
 # 复制整个项目
 COPY . .
 
@@ -23,7 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
     rm -rf /var/lib/apt/lists/*
 
 # 从构建阶段拷贝编译好的二进制文件
-COPY --from=builder /app/target/release/order-server /app/server
+COPY --from=builder /app/target/release/server /app/server
 
 # 创建配置目录（运行时会挂载）
 RUN mkdir -p /app

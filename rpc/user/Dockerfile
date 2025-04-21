@@ -10,6 +10,9 @@ WORKDIR /app
 # 复制整个项目
 COPY . .
 
+# 安装 rustfmt 组件
+RUN rustup component add rustfmt
+
 # 构建User服务
 RUN cargo build --release -p user
 
@@ -23,7 +26,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
     rm -rf /var/lib/apt/lists/*
 
 # 从构建阶段拷贝编译好的二进制文件
-COPY --from=builder /app/target/release/user-server /app/server
+COPY --from=builder /app/target/release/server /app/server
 
 # 创建配置目录（运行时会挂载）
 RUN mkdir -p /app
