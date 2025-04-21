@@ -1,3 +1,6 @@
+default:
+    just --list
+    
 [group('dev')]
 rpc-user:
     cargo run -p user --bin server -- --config=./rpc/user/config/dev.toml
