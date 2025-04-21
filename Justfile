@@ -13,8 +13,8 @@ rpc-order:
 api:
     cargo run -p api --bin server -- --config=./api/config/dev.toml
 
-docker:
+docker-up:
     sudo docker compose up -d
-
-nacos-console:
-    firefox http://127.0.0.1:10848/
+    
+docker-down:
+    sudo docker compose
