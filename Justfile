@@ -1,4 +1,5 @@
-default:
+# 显示当前这条帮助信息
+help:
     just --list
     
 [group('dev')]
