@@ -5,6 +5,8 @@ edition.workspace = true
 
 [dependencies]
 volo = "0.10"
+volo-http.workspace = true
 tracing.workspace = true
+metrics.workspace = true
 uuid = { version = "1.10", features = ["v4"] }
 chrono = "0.4"
