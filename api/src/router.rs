@@ -1,4 +1,4 @@
-use crate::prometheus::{setup_metrics_recorder, track_metrics};
+use crate::prometheus::setup_metrics_recorder;
 use crate::{controller, ServiceContext};
 use std::future::ready;
 use volo_http::{
@@ -6,6 +6,7 @@ use volo_http::{
     server::{middleware, route::get, IntoResponse},
     Extension, Router,
 };
+use volo_observe::metric::track_metrics;
 
 /// 构建路由
 pub fn build_router(cxt: ServiceContext) -> Router {

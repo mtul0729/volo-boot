@@ -129,6 +129,7 @@ dependencies = [
  "user",
  "volo",
  "volo-http",
+ "volo-observe",
 ]
 
 [[package]]
@@ -3571,9 +3572,11 @@ name = "volo-observe"
 version = "0.1.0"
 dependencies = [
  "chrono",
+ "metrics",
  "tracing",
  "uuid",
  "volo",
+ "volo-http",
 ]
 
 [[package]]
