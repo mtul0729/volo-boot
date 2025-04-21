@@ -21,3 +21,5 @@ common = { path = "../../common" }
 serde.workspace = true
 clap.workspace = true
 chrono.workspace = true
+
+volo-observe = { path = "../../volo-observe" }

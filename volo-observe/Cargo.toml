@@ -1,0 +1,10 @@
+[package]
+name = "volo-observe"
+version = "0.1.0"
+edition.workspace = true
+
+[dependencies]
+volo = "0.10"
+tracing.workspace = true
+uuid = { version = "1.10", features = ["v4"] }
+chrono = "0.4"

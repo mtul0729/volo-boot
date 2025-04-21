@@ -9,6 +9,7 @@ use std::time::Duration;
 use tokio::signal;
 use volo_grpc::codegen::futures::TryFutureExt;
 use volo_grpc::server::{Server, ServiceBuilder};
+use volo_observe::logging::LoggingLayer;
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -91,6 +92,7 @@ async fn main() {
             .add_service(
                 ServiceBuilder::new(order_volo_gen::order::OrderServiceServer::new(S)).build(),
             )
+            .layer_front(LoggingLayer)
             .run_with_shutdown(addr, async {
                 let _ = shutdown_rx.changed().await;
                 Ok(())

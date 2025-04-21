@@ -1,5 +1,5 @@
 [workspace]
-members = ["api", "common", "rpc/user", "rpc/order"]
+members = ["api", "common", "rpc/user", "rpc/order", "volo-observe"]
 resolver = "3"
 
 [workspace.package]
