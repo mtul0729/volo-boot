@@ -15,3 +15,6 @@ api:
 
 docker:
     sudo docker compose up -d
+
+nacos-console:
+    firefox http://127.0.0.1:10848/
