@@ -102,10 +102,10 @@ async fn subscribe_service(
                     .await;
             match sub_ret {
                 Ok(_) => {
-                    tracing::info!("subscribe service: {} success.", sub_svc.clone());
+                    tracing::info!("subscribe service: {} success.", &sub_svc);
                 }
                 Err(e) => {
-                    tracing::error!("subscribe service: {} field, error: {}", sub_svc.clone(), e);
+                    tracing::error!("subscribe service: {} field, error: {}", &sub_svc, e);
                 }
             }
 
