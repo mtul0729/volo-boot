@@ -13,6 +13,13 @@ rpc-order:
 api:
     cargo run -p api --bin server -- --config=./api/config/dev.toml
 
+# 启动docker容器,服务不使用docker启动,需要在本地直接运行服务
+[group('dev')]
 docker-up:
     sudo docker compose -f docker-compose-dev.yml up 
     
+# 构建所有服务的docker镜像,构建时间长,不建议在开发环境运行
+[group('test')]
+docker-build:
+    cargo clean
+    sudo COMPOSE_BAKE=true docker compose -f docker-compose-test.yml build
