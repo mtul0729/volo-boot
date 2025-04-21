@@ -1,9 +1,8 @@
 [workspace]
 members = ["api", "common", "rpc/user", "rpc/order"]
-resolver = "2"
 
 [workspace.package]
-edition = "2021"
+edition = "2024"
 
 [workspace.dependencies]
 # 框架相关依赖
