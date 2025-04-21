@@ -1,0 +1,17 @@
+# 服务运行端口
+port=8080
+#timeout=10
+# api网关服务需要订阅哪些服务
+subscribe_service=[
+    "volo-boot-user.rpc",
+    "volo-boot-order.rpc",
+]
+
+# 服务发现 server discover
+[sd.nacos]
+server_addr="127.0.0.1:8848"
+namespace="public"
+username=""
+password=""
+# 用于注册到nacos时用的服务名称
+service_name="volo-boot-api.http"

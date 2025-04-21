@@ -7,7 +7,7 @@ services:
       - "9848:9848" # grpc
       - "10848:10848" # 控制台
     volumes:
-      - ./data:/io:rw
+      - ./tmp:/io:rw
     environment:
       - RNACOS_INIT_ADMIN_USERNAME=admin
       - RNACOS_INIT_ADMIN_PASSWORD=admin

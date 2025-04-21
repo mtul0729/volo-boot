@@ -1,0 +1,12 @@
+# 服务运行端口
+port=8081
+
+# 服务发现 server discover
+[sd.nacos]
+# ncos地址, 如 10.64.132.37:8848
+server_addr="127.0.0.1:8848"
+namespace="public"
+username=""
+password=""
+# 用于注册到nacos时用的服务名称
+service_name="volo-boot-user.rpc"
