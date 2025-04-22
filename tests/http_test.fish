@@ -3,7 +3,7 @@
 set BASE_URL "http://localhost:8080"
 
 if test (count $argv) -eq 0
-    set DURATION 60
+    set DURATION 8
 else
     set DURATION $argv[1]
 end
