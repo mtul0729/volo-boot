@@ -18,3 +18,5 @@ tracing.workspace = true
 common = { path = "../../common" }
 serde.workspace = true
 clap.workspace = true
+
+volo-observe = { path = "../../volo-observe" }

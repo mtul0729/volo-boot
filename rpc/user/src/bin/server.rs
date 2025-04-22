@@ -80,6 +80,7 @@ async fn main() {
             .add_service(
                 ServiceBuilder::new(user_volo_gen::user::UserServiceServer::new(S)).build(),
             )
+            .layer_front(volo_observe::trace::TracingLayer)
             .run_with_shutdown(addr, async {
                 let _ = shutdown_rx.changed().await;
                 Ok(())

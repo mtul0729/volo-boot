@@ -1,14 +1,14 @@
-use api::{consts, router, svc_discover, ServiceContext};
+use api::{ServiceContext, consts, router, svc_discover};
 use clap::Parser;
 use common::load_config::LoadConfig;
 use common::svc::nacos::NacosNamingData;
 use std::sync::Arc;
 use std::{net::SocketAddr, time::Duration};
 use volo_http::{
+    Address,
     context::ServerContext,
     http::StatusCode,
-    server::{layer::TimeoutLayer, Router, Server},
-    Address,
+    server::{Router, Server, layer::TimeoutLayer},
 };
 
 use order::order::OrderServiceClient;
@@ -78,7 +78,11 @@ async fn main() {
 
     tracing::info!("Listening on {addr}");
 
-    Server::new(app).run(addr).await.unwrap();
+    Server::new(app)
+        .layer_front(volo_observe::trace::TracingLayer)
+        .run(addr)
+        .await
+        .unwrap();
 }
 
 async fn subscribe_service(

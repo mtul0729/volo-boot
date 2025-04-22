@@ -3,6 +3,7 @@ use clap::Parser;
 use common::load_config::LoadConfig;
 use order::app_config::AppConfig;
 use order::S;
+use volo_observe::trace::TracingLayer;
 use std::net::SocketAddr;
 use std::sync::Arc;
 use std::time::Duration;
@@ -93,6 +94,7 @@ async fn main() {
                 ServiceBuilder::new(order_volo_gen::order::OrderServiceServer::new(S)).build(),
             )
             .layer_front(LoggingLayer)
+            .layer_front(TracingLayer)
             .run_with_shutdown(addr, async {
                 let _ = shutdown_rx.changed().await;
                 Ok(())

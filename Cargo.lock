@@ -3709,6 +3709,7 @@ dependencies = [
  "user-volo-gen",
  "volo",
  "volo-grpc",
+ "volo-observe",
 ]
 
 [[package]]
