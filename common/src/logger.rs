@@ -55,7 +55,7 @@ pub fn init_tracing() -> (WorkerGuard, WorkerGuard) {
         .with(env_filter)
         .with(console_layer)
         .with(file_layer)
-        .with(otel_layer); 
+        .with(otel_layer);
 
     tracing::subscriber::set_global_default(subscriber)
         .expect("Failed to set global tracing subscriber");
