@@ -3910,6 +3910,7 @@ name = "volo-observe"
 version = "0.1.0"
 dependencies = [
  "chrono",
+ "metainfo",
  "metrics",
  "tracing",
  "uuid",

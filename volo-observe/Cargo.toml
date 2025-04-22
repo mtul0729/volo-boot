@@ -10,3 +10,4 @@ tracing.workspace = true
 metrics.workspace = true
 uuid = { version = "1.10", features = ["v4"] }
 chrono = "0.4"
+metainfo = "0.7.14"

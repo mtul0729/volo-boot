@@ -43,6 +43,7 @@ pub fn init_tracing() -> (WorkerGuard, WorkerGuard) {
     // 配置 OpenTelemetry Tracer
     let tracer = opentelemetry_otlp::new_pipeline()
         .tracing()
+        // TODO: 配置exporter
         .with_exporter(opentelemetry_otlp::new_exporter().tonic())
         .install_simple()
         .expect("Failed to install OpenTelemetry pipeline");
