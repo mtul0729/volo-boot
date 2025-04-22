@@ -7,6 +7,11 @@ use volo::Layer;
 use volo::Service;
 use volo::context::Context;
 
+/// A tracing layer that wraps a service and adds distributed tracing capabilities.
+///
+/// This layer is used to propagate and generate trace and span IDs for distributed tracing.
+/// It ensures that each request is instrumented with a unique trace and span ID.
+#[derive(Clone)]
 pub struct TracingLayer;
 
 impl<S> Layer<S> for TracingLayer {
@@ -17,6 +22,10 @@ impl<S> Layer<S> for TracingLayer {
     }
 }
 
+/// A middleware that adds distributed tracing capabilities to a service.
+///
+/// This struct is used internally by the `TracingLayer` to propagate and generate
+/// trace and span IDs for each request.
 #[derive(Clone)]
 pub struct TracingMiddleware<S> {
     inner: S,
@@ -29,7 +38,7 @@ where
     Cx: Send + 'static + Context,
     Req: Send + 'static,
 {
-    async fn call(&self, cx: &mut Cx, req: Req) -> Result<S::Response, S::Error> {
+        async fn call(&self, cx: &mut Cx, req: Req) -> Result<S::Response, S::Error> {
         // ——— 1. 提取/生成 TraceID & SpanID ———
         let (parent_trace, parent_span) = METAINFO.with(|mi| {
             let mi = mi.borrow();

@@ -4,16 +4,23 @@ use volo::Layer;
 use volo::Service;
 use volo::context::Context;
 use tracing::{debug, error, info};
+
+/// A logging layer that wraps a service and logs request and response details.
+/// This layer is used to track the lifecycle of requests, including their parameters,
+/// responses, and execution time.
 pub struct LoggingLayer;
 
 impl<S> Layer<S> for LoggingLayer {
     type Service = LoggingService<S>;
 
-    fn layer(self, inner: S) -> Self::Service {
+        fn layer(self, inner: S) -> Self::Service {
         LoggingService { inner }
     }
 }
 
+/// A service wrapper that logs request and response details.
+///
+/// This struct is used internally by the `LoggingLayer` to provide logging functionality.
 #[derive(Clone)]
 pub struct LoggingService<S> {
     inner: S,
@@ -28,7 +35,7 @@ where
     S::Response: std::fmt::Debug,
     S::Error: std::fmt::Debug,
 {
-    async fn call(&self, cx: &mut Cx, req: Req) -> Result<S::Response, S::Error> {
+        async fn call(&self, cx: &mut Cx, req: Req) -> Result<S::Response, S::Error> {
         let request_id = Uuid::new_v4().to_string();
         let start_time = Instant::now();
 
